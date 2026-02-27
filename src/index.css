@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* AI Collaborative IDE Design System - Dark Theme */
+
+@layer base {
+  :root {
+    --background: 222 47% 6%;
+    --foreground: 210 20% 92%;
+
+    --card: 222 44% 8%;
+    --card-foreground: 210 20% 92%;
+
+    --popover: 222 44% 10%;
+    --popover-foreground: 210 20% 92%;
+
+    --primary: 187 85% 53%;
+    --primary-foreground: 222 47% 6%;
+
+    --secondary: 222 30% 14%;
+    --secondary-foreground: 210 20% 85%;
+
+    --muted: 222 30% 12%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 187 70% 40%;
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 20% 98%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 222 47% 6%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 222 47% 6%;
+
+    --border: 222 30% 18%;
+    --input: 222 30% 16%;
+    --ring: 187 85% 53%;
+
+    --radius: 0.5rem;
+
+    /* IDE specific tokens */
+    --editor-bg: 222 47% 7%;
+    --editor-line: 222 30% 10%;
+    --editor-selection: 187 50% 20%;
+    --terminal-bg: 222 47% 5%;
+    --sidebar-width: 280px;
+    --panel-header: 222 30% 12%;
+
+    /* Syntax highlighting */
+    --syntax-keyword: 187 85% 60%;
+    --syntax-string: 142 60% 55%;
+    --syntax-comment: 215 15% 45%;
+    --syntax-function: 38 90% 60%;
+    --syntax-number: 280 70% 70%;
+    --syntax-variable: 210 70% 70%;
+
+    --sidebar-background: 222 44% 7%;
+    --sidebar-foreground: 210 20% 85%;
+    --sidebar-primary: 187 85% 53%;
+    --sidebar-primary-foreground: 222 47% 6%;
+    --sidebar-accent: 222 30% 14%;
+    --sidebar-accent-foreground: 210 20% 92%;
+    --sidebar-border: 222 30% 15%;
+    --sidebar-ring: 187 85% 53%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Custom scrollbar for IDE feel */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
+  }
+}
+
+@layer components {
+
+  /* Panel styles */
+  .ide-panel {
+    @apply bg-card border border-border rounded-lg overflow-hidden;
+  }
+
+  .ide-panel-header {
+    @apply px-3 py-2 bg-secondary/50 border-b border-border flex items-center justify-between;
+  }
+
+  .ide-panel-title {
+    @apply text-sm font-medium text-foreground/90;
+  }
+
+  /* File tree styles */
+  .file-tree-item {
+    @apply flex items-center gap-1.5 px-2 py-0 text-[11px] text-muted-foreground hover:bg-secondary/50 hover:text-foreground cursor-pointer rounded transition-colors;
+  }
+
+  .file-tree-item.active {
+    @apply bg-primary/10 text-primary;
+  }
+
+  /* Tab styles */
+  .editor-tab {
+    @apply px-3 py-2 text-sm text-muted-foreground border-r border-border flex items-center gap-2 cursor-pointer hover:bg-secondary/30 transition-colors;
+  }
+
+  .editor-tab.active {
+    @apply text-foreground bg-card border-t-2 border-t-primary;
+  }
+
+  /* Terminal styles */
+  .terminal-line {
+    @apply font-mono text-sm leading-relaxed;
+  }
+
+  .terminal-prompt {
+    @apply text-primary;
+  }
+
+  .terminal-output {
+    @apply text-foreground/80;
+  }
+
+  /* Agent card styles */
+  .agent-card {
+    @apply p-3 bg-secondary/30 border border-border rounded-lg hover:border-primary/30 transition-colors cursor-pointer;
+  }
+
+  .agent-card.active {
+    @apply border-primary bg-primary/5;
+  }
+
+  /* Status badge */
+  .status-badge {
+    @apply px-2 py-0.5 text-xs font-medium rounded-full;
+  }
+
+  .status-badge.success {
+    @apply bg-success/20 text-success;
+  }
+
+  .status-badge.warning {
+    @apply bg-warning/20 text-warning;
+  }
+
+  .status-badge.error {
+    @apply bg-destructive/20 text-destructive;
+  }
+
+  .status-badge.info {
+    @apply bg-primary/20 text-primary;
+  }
+
+  /* Glow effects */
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.15);
+  }
+
+  .glow-primary-sm {
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.1);
+  }
+}
+
+@layer utilities {
+
+  /* Text gradient utility */
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+
+  /* IDE specific utilities */
+  .ide-scrollbar-hidden {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .ide-scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+}

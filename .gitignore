@@ -1,0 +1,10 @@
+node_modules/
+.venv/
+venv/
+TestingPage_Backend/venv/
+.env
+__pycache__/
+dist/
+build/
+*.pyc
+
