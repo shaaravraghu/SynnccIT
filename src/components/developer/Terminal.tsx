@@ -34,8 +34,9 @@ function CloudTerminal({ isExpanded }: { isExpanded?: boolean }) {
   const [lines, setLines] = useState<
     { text: string; type: 'cmd' | 'out' | 'err' | 'info' }[]
   >([
-    { text: '☁️  Cloud Terminal — commands run on the server.', type: 'info' },
-    { text: 'ℹ️  Note: Interactive programs (vim, top) are not supported.', type: 'info' },
+    { text: '☁️  Cloud Terminal — running on the Vercel server (Node.js runtime).', type: 'info' },
+    { text: "ℹ️  Files shown are Vercel's deployment bundle — your source files aren't here.", type: 'info' },
+    { text: '✅  You can run: node, python3, curl, echo, env, cat, pwd, ls, etc.', type: 'info' },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -209,21 +210,28 @@ function LocalTerminal({
   const [error, setError] = useState('');
 
   const connect = useCallback(() => {
-    // Clean up any existing connection first
+    // Clean up any existing connection
     if (wsRef.current) {
       wsRef.current.onclose = null;
       wsRef.current.close();
+      wsRef.current = null;
     }
 
     setConnected(false);
     setError('');
 
-    // Build the WS URL.  In Vite dev (port 8080), the proxy rewrites
-    // /ws → ws://localhost:8000, so we use the same host.
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = `${protocol}//${window.location.host}/ws/terminal`;
+    // Connect DIRECTLY to the Python backend on port 8000.
+    // Going through the Vite proxy (/ws → :8000) is unreliable for WS upgrades,
+    // so we talk to :8000 directly when running locally.
+    const wsUrl = 'ws://localhost:8000/ws/terminal';
 
-    const ws = new WebSocket(wsUrl);
+    let ws: WebSocket;
+    try {
+      ws = new WebSocket(wsUrl);
+    } catch (e: any) {
+      setError(`Cannot open WebSocket: ${e.message}`);
+      return;
+    }
     wsRef.current = ws;
 
     ws.onopen = () => {
