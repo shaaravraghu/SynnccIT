@@ -4,6 +4,10 @@ SynnccIT is a modern, modular, and AI-driven Integrated Development Environment 
 
 ## Demo Video Link:
 https://youtu.be/6MdZ4L3TBNQ
+(Public Unlisted - Anyone with Link)
+
+https://github.com/user-attachments/assets/66e2259d-7757-4884-886e-b69d841f5926
+
 
 ## Deployment Link:
 https://synncc-it.vercel.app/
